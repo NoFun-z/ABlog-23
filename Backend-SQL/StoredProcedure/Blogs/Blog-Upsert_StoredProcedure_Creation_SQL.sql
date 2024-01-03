@@ -5,11 +5,11 @@ AS
 	MERGE INTO [dbo].[Blog] TARGET
 	USING (
 		SELECT
-			BlogId,
+			[BlogId],
 			@ApplicationUserId [ApplicationUserId],
-			Title,
-			Content,
-			PhotoId
+			[Title],
+			[Content],
+			[PhotoId]
 		FROM 
 			@Blog
 	) AS SOURCE

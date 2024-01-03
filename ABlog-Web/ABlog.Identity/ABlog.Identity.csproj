@@ -9,4 +9,9 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ABlog.Models\ABlog.Models.csproj" />
+    <ProjectReference Include="..\ABlog.Repository\ABlog.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
