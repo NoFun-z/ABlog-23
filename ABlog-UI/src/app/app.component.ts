@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { BlogComponent } from './components/blog-components/blog/blog.component';
-import { BlogCardComponent } from './components/blog-components/blog-card/blog-card.component';
 import { BlogEditComponent } from './components/blog-components/blog-edit/blog-edit.component';
 import { BlogsComponent } from './components/blog-components/blogs/blogs.component';
 import { CommentBoxComponent } from './components/comment-components/comment-box/comment-box.component';

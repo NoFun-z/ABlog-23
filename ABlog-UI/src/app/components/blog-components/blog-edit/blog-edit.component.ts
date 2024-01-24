@@ -18,13 +18,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './blog-edit.component.css'
 })
 export class BlogEditComponent implements OnInit {
-  private bf = inject(FormBuilder);
   blogForm: FormGroup | any;
   confirmImageDelete: boolean = false;
   userPhotos: Photo[] = [];
+  blogId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private blogService: BlogService,
     private photoService: PhotoService,
     private toastr: ToastrService,
@@ -32,10 +33,10 @@ export class BlogEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const blogId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.blogId = parseInt(this.route.snapshot.paramMap.get('id')!);
 
-    this.blogForm = this.bf.group({
-      blogId: [blogId],
+    this.blogForm = this.formBuilder.group({
+      blogId: this.blogId,
       title: ['', [
         Validators.required,
         Validators.minLength(10),
@@ -54,8 +55,9 @@ export class BlogEditComponent implements OnInit {
       this.userPhotos = userPhotos;
     });
 
-    if (!!blogId && blogId !== -1) {
-      this.blogService.get(blogId).subscribe(blog => {
+    if (this.blogId && this.blogId !== -1) {
+      this.blogService.get(this.blogId).subscribe(blog => {
+        console.log(blog);
         this.updateForm(blog);
       });
     }
@@ -101,8 +103,8 @@ export class BlogEditComponent implements OnInit {
       blogId: blog.blogId,
       title: blog.title,
       content: blog.content,
-      photoId: blog.photoId,
-      photoDescription: photoDescription
+      photoId: blog.photoId?? null,
+      photoDescription: photoDescription?? ''
     });
   }
 

@@ -27,7 +27,7 @@ namespace ABlog_Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Photo>> UploadPhoto(IFormFile file)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var uploadResult = await _photoService.AddPhotoAsync(file);
 
@@ -49,7 +49,7 @@ namespace ABlog_Web.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Photo>>> GetByApplicationUserId()
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var photos = await _photoRepository.GetAllByUserIdAsync(applicationUserId);
 
@@ -68,7 +68,7 @@ namespace ABlog_Web.Controllers
         [HttpDelete("{photoId}")]
         public async Task<ActionResult<int>> Delete(int photoId)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var foundPhoto = await _photoRepository.GetAsync(photoId);
 

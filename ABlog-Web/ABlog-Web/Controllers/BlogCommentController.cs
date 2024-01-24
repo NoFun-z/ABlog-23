@@ -19,7 +19,7 @@ namespace ABlog_Web.Controllers
         [HttpPost]
         public async Task<ActionResult<BlogComment>> Create(BlogCommentCreate blogCommentCreate)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var createdBlogComment = await _blogCommentRepository.UpsertAsync(blogCommentCreate, applicationUserId);
 
@@ -38,7 +38,7 @@ namespace ABlog_Web.Controllers
         [HttpDelete("{blogCommentId}")]
         public async Task<ActionResult<int>> Delete(int blogCommentId)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var foundBlogComment = await _blogCommentRepository.GetAsync(blogCommentId);
 

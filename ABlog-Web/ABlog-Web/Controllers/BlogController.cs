@@ -21,7 +21,7 @@ namespace ABlog_Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Blog>> Create(BlogCreate blogCreate)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.FirstOrDefault(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             if (blogCreate.PhotoId.HasValue)
             {
@@ -71,7 +71,7 @@ namespace ABlog_Web.Controllers
             };
 
             // Try to find the "nameidentifier" claim
-            var nameIdClaim = User.Claims.FirstOrDefault(i => i.Type == JwtRegisteredClaimNames.NameId);
+            var nameIdClaim = User.Claims.FirstOrDefault(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
 
             if (nameIdClaim != null)
             {
@@ -88,7 +88,7 @@ namespace ABlog_Web.Controllers
                 }
             }
 
-            return Ok(response);
+            return Ok(blog);
 
         }
 
@@ -112,7 +112,7 @@ namespace ABlog_Web.Controllers
         [HttpDelete("{blogId}")]
         public async Task<ActionResult<int>> Delete(int blogId)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
+            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value);
 
             var foundBlog = await _blogRepository.GetAsync(blogId);
 
